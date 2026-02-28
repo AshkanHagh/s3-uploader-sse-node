@@ -1,11 +1,16 @@
 import { Module } from "@nestjs/common";
-import { EventEmitterModule } from "@nestjs/event-emitter";
 import { ContextLoggerModule } from "nestjs-context-logger";
 import { ConfigModule } from "./config/config.module";
+import { WorkersModule } from "./workers/workers.module";
+import { AttachmentModule } from "./features/attachment/attachment.module";
+import { APP_FILTER } from "@nestjs/core";
+import { UploaderExceptionFilter } from "./filters/excepiton-filter";
 
 @Module({
   imports: [
     ConfigModule,
+    WorkersModule,
+    AttachmentModule,
     ContextLoggerModule.forRoot({
       pinoHttp: {
         level: process.env.LOG_LEVEL || "info",
@@ -24,10 +29,12 @@ import { ConfigModule } from "./config/config.module";
       },
       forRoutes: ["*path"],
     }),
-    EventEmitterModule.forRoot({
-      global: true,
-      wildcard: true,
-    }),
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: UploaderExceptionFilter,
+    },
   ],
 })
 export class AppModule {}

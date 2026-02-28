@@ -15,7 +15,12 @@ async function bootstrap() {
   app.setGlobalPrefix("api");
   app.enableShutdownHooks();
 
-  await app.register(import("@fastify/multipart"));
+  await app.register(import("@fastify/multipart"), {
+    limits: {
+      files: 1,
+      fileSize: 10 * 1024 ** 3,
+    },
+  });
 
   await app.listen(process.env.PORT ?? 3000);
 }
