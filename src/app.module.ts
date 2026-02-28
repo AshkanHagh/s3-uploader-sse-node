@@ -1,8 +1,7 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
 import { EventEmitterModule } from "@nestjs/event-emitter";
 import { ContextLoggerModule } from "nestjs-context-logger";
-import { AttachmentModule } from "./features/attachment/attachment.module";
+import { ConfigModule } from "./config/config.module";
 
 @Module({
   imports: [
@@ -10,7 +9,7 @@ import { AttachmentModule } from "./features/attachment/attachment.module";
     ContextLoggerModule.forRoot({
       pinoHttp: {
         level: process.env.LOG_LEVEL || "info",
-        autoLogging: false,
+        autoLogging: true,
         quietReqLogger: true,
         transport:
           process.env.NODE_ENV !== "production"
@@ -29,7 +28,6 @@ import { AttachmentModule } from "./features/attachment/attachment.module";
       global: true,
       wildcard: true,
     }),
-    AttachmentModule,
   ],
 })
 export class AppModule {}
