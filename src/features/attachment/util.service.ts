@@ -23,6 +23,10 @@ export class AttachmentUtilService {
     private eventEmitter: EventEmitter2,
   ) {}
 
+  /**
+   * splits file to parts with size of FILE_PART_SIZE
+   * sends event after each part uploaded(NOTE this function will not end the event stream)
+   */
   async uploadLargeFile(
     id: string,
     totalBytes: number,
@@ -47,7 +51,6 @@ export class AttachmentUtilService {
       for await (const chunk of stream) {
         const chunkBuf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
         buffer = Buffer.concat([buffer, chunkBuf]);
-        console.log(buffer.length);
 
         while (buffer.length >= FILE_PART_SIZE) {
           const partResult = await this.client.send(
@@ -121,6 +124,7 @@ export class AttachmentUtilService {
     }
   }
 
+  // for each chunk read, sents upload.event(NOTE: after upload the event stream will end)
   async uploadSmall(
     id: string,
     contentType: string,

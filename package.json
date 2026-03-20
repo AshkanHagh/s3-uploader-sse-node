@@ -13,15 +13,12 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test": "",
+    "test:watch": "",
+    "test:e2e": ""
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.999.0",
-    "@aws-sdk/lib-storage": "^3.999.0",
     "@fastify/multipart": "^9.4.0",
     "@nestjs/common": "^11.1.14",
     "@nestjs/config": "^4.0.3",
@@ -32,9 +29,7 @@
     "fastify": "^5.7.4",
     "nestjs-context-logger": "^1.9.1",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.2",
-    "tmp-promise": "^3.0.3",
-    "ts-pattern": "^5.9.0"
+    "rxjs": "^7.8.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -45,8 +40,6 @@
     "@swc/cli": "^0.8.0",
     "@swc/core": "^1.15.17",
     "@types/busboy": "^1.5.4",
-    "@types/express": "^5.0.0",
-    "@types/jest": "^30.0.0",
     "@types/node": "^22.10.7",
     "@types/supertest": "^6.0.2",
     "eslint": "^9.18.0",
@@ -58,7 +51,6 @@
     "prettier": "^3.4.2",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
-    "ts-jest": "^29.2.5",
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",

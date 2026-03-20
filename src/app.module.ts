@@ -1,7 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ContextLoggerModule } from "nestjs-context-logger";
 import { ConfigModule } from "./config/config.module";
-import { WorkersModule } from "./workers/workers.module";
 import { AttachmentModule } from "./features/attachment/attachment.module";
 import { APP_FILTER } from "@nestjs/core";
 import { UploaderExceptionFilter } from "./filters/excepiton-filter";
@@ -9,7 +8,6 @@ import { UploaderExceptionFilter } from "./filters/excepiton-filter";
 @Module({
   imports: [
     ConfigModule,
-    WorkersModule,
     AttachmentModule,
     ContextLoggerModule.forRoot({
       pinoHttp: {
