@@ -5,11 +5,15 @@ import { AttachmentModule } from "./features/attachment/attachment.module";
 import { APP_FILTER } from "@nestjs/core";
 import { UploaderExceptionFilter } from "./filters/excepiton-filter";
 import { EncryptionModule } from "./features/encryption/encryption.module";
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
   imports: [
     ConfigModule,
     AttachmentModule,
+    JwtModule.register({
+      global: true,
+    }),
     ContextLoggerModule.forRoot({
       pinoHttp: {
         level: process.env.LOG_LEVEL || "info",

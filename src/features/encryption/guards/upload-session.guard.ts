@@ -33,12 +33,11 @@ export class UploadSessionGuard implements CanActivate {
 
     try {
       await this.jwtService.verifyAsync<SessionTokenPayload>(token, {
-        secret: session.sessionKey,
+        secret: session,
         algorithms: ["HS256"],
       });
 
       req.session = {
-        fileHash: session.fileHash,
         uploadId: decoded.uploadId,
       };
     } catch (error) {

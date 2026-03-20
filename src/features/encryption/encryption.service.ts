@@ -6,13 +6,12 @@ import {
   type IEncryptionConfig,
 } from "src/config/encryption.config";
 import crypto from "node:crypto";
-import { UploadSession } from "./types";
 
 @Injectable()
 export class EncryptionService {
   public publicKey: string;
   public privateKey: string;
-  public uploadSessions: Map<string, UploadSession>;
+  public uploadSessions: Map<string, Buffer> = new Map();
 
   constructor(@EncryptionConfig() private encryptionConfig: IEncryptionConfig) {
     this.publicKey = readFileSync(
@@ -34,5 +33,13 @@ export class EncryptionService {
       },
       Buffer.from(encryptedBase64, "base64"),
     );
+  }
+
+  deriveUploadId(sessionKey: Buffer) {
+    return crypto
+      .createHash("sha256")
+      .update(sessionKey)
+      .digest("hex")
+      .slice(0, 32);
   }
 }
