@@ -4,8 +4,10 @@ import { AttachmentController } from "./attachment.controller";
 import { AttachmentUtilService } from "./util.service";
 import { S3Client } from "@aws-sdk/client-s3";
 import { S3_CLIENT } from "./constants";
+import { EventEmitterModule } from "@nestjs/event-emitter";
 
 @Module({
+  imports: [EventEmitterModule.forRoot()],
   controllers: [AttachmentController],
   providers: [
     AttachmentService,

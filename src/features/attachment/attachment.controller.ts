@@ -13,10 +13,6 @@ export class AttachmentController implements IAttachmentController {
     @Req() req: FastifyRequest,
   ) {
     const file = await req.file();
-    const fileId = await this.attachmentService.uploadFile(
-      contentLength,
-      file!,
-    );
-    return { id: fileId };
+    await this.attachmentService.uploadFile(contentLength, file!);
   }
 }

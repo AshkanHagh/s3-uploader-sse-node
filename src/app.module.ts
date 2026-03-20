@@ -4,6 +4,7 @@ import { ConfigModule } from "./config/config.module";
 import { AttachmentModule } from "./features/attachment/attachment.module";
 import { APP_FILTER } from "@nestjs/core";
 import { UploaderExceptionFilter } from "./filters/excepiton-filter";
+import { EncryptionModule } from "./features/encryption/encryption.module";
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UploaderExceptionFilter } from "./filters/excepiton-filter";
       },
       forRoutes: ["*path"],
     }),
+    EncryptionModule,
   ],
   providers: [
     {
