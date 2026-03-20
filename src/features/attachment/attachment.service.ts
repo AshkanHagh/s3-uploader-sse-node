@@ -3,7 +3,6 @@ import { IAttachmentService } from "./interfaces/service";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { MultipartFile } from "@fastify/multipart";
 import { AttachmentUtilService } from "./util.service";
-import { randomUUID } from "node:crypto";
 import { MAX_SMALL_FILE_SIZE_LIMIT } from "./constants";
 import { UploadDetailEvent } from "./types";
 import { UploaderError, UploaderErrorType } from "src/filters/exception";
@@ -46,12 +45,11 @@ export class AttachmentService implements IAttachmentService {
     return { token, id: uploadId };
   }
 
-  async uploadFile(totalBytes: number, file: MultipartFile) {
-    const fileId = randomUUID();
+  async uploadFile(uploadId: string, totalBytes: number, file: MultipartFile) {
     if (totalBytes > MAX_SMALL_FILE_SIZE_LIMIT) {
       // upload larg file with s3 multipart
       await this.utilService.uploadLargeFile(
-        fileId,
+        uploadId,
         totalBytes,
         file.mimetype,
         file.file,
@@ -59,15 +57,14 @@ export class AttachmentService implements IAttachmentService {
     } else {
       // upload the full file to s3
       await this.utilService.uploadSmall(
-        fileId,
+        uploadId,
         file.mimetype,
         totalBytes,
         file.file,
       );
     }
-    await this.eventEmitter.emitAsync(`upload.${fileId}`, <UploadDetailEvent>{
+    await this.eventEmitter.emitAsync(`upload.${uploadId}`, <UploadDetailEvent>{
       remaning: false,
     });
-    return fileId;
   }
 }
