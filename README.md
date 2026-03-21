@@ -24,6 +24,8 @@ At any point during the upload, the client can open an SSE connection to receive
 
 **In-memory session store.** Upload sessions are kept in a `Map` in memory. Sessions do not survive a server restart, which is acceptable given the short token TTL. If you need horizontal scaling, you must use sticky session load balancing so that the init request and the subsequent upload and SSE requests from the same client all route to the same instance.
 
+**RSA session key exchange.** Instead of having the client send a plain UUID to identify its session, the client generates a random AES key, encrypts it with the server's RSA public key, and sends that. The server decrypts it and uses it as the JWT signing secret for that session. The public key being exposed on the frontend is intentional and fine, that is how asymmetric encryption works. The practical result is that every upload session has its own isolated signing secret that the server never chose, so a token from one session is completely useless against another. It is the same session isolation you would get from a UUID, but considerably cooler.
+
 ---
 
 ## Running the Project
