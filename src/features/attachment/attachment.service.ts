@@ -8,6 +8,8 @@ import { UploadDetailEvent } from "./types";
 import { UploaderError, UploaderErrorType } from "src/filters/exception";
 import { EncryptionService } from "../encryption/encryption.service";
 import { JwtService } from "@nestjs/jwt";
+import { fromEvent, map, takeWhile } from "rxjs";
+import { randomUUID } from "node:crypto";
 
 @Injectable()
 export class AttachmentService implements IAttachmentService {
@@ -27,7 +29,7 @@ export class AttachmentService implements IAttachmentService {
       throw new UploaderError(UploaderErrorType.INVALID_SESSION_KEY, error);
     }
 
-    const uploadId = this.encryptionService.deriveUploadId(sessionKey);
+    const uploadId = randomUUID();
     if (this.encryptionService.uploadSessions.get(uploadId)) {
       throw new UploaderError(UploaderErrorType.ALREADY_EXISTS);
     }
@@ -66,5 +68,12 @@ export class AttachmentService implements IAttachmentService {
     await this.eventEmitter.emitAsync(`upload.${uploadId}`, <UploadDetailEvent>{
       remaning: false,
     });
+  }
+
+  getUploadProgress(uploadId: string) {
+    return fromEvent(this.eventEmitter, `upload.${uploadId}`).pipe(
+      map((payload) => ({ data: payload }) as { data: UploadDetailEvent }),
+      takeWhile((event) => event.data.remaning, true),
+    );
   }
 }

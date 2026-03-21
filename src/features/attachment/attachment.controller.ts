@@ -4,6 +4,7 @@ import {
   Headers,
   Post,
   Req,
+  Sse,
   UseGuards,
 } from "@nestjs/common";
 import { AttachmentService } from "./attachment.service";
@@ -32,5 +33,11 @@ export class AttachmentController implements IAttachmentController {
       contentLength,
       file!,
     );
+  }
+
+  @Sse("progress")
+  @UseGuards(UploadSessionGuard)
+  getUploadProgress(@Req() req: FastifyRequest) {
+    return this.attachmentService.getUploadProgress(req.session.uploadId);
   }
 }

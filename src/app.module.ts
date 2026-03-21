@@ -6,10 +6,15 @@ import { APP_FILTER } from "@nestjs/core";
 import { UploaderExceptionFilter } from "./filters/excepiton-filter";
 import { EncryptionModule } from "./features/encryption/encryption.module";
 import { JwtModule } from "@nestjs/jwt";
+import { EventEmitterModule } from "@nestjs/event-emitter";
 
 @Module({
   imports: [
     ConfigModule,
+    EventEmitterModule.forRoot({
+      wildcard: true,
+      global: true,
+    }),
     AttachmentModule,
     JwtModule.register({
       global: true,

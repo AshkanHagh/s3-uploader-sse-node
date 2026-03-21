@@ -34,12 +34,4 @@ export class EncryptionService {
       Buffer.from(encryptedBase64, "base64"),
     );
   }
-
-  deriveUploadId(sessionKey: Buffer) {
-    return crypto
-      .createHash("sha256")
-      .update(sessionKey)
-      .digest("hex")
-      .slice(0, 32);
-  }
 }
