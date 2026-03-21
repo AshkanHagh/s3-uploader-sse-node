@@ -1,0 +1,127 @@
+{
+  "info": {
+    "name": "s3-uploader-sse-node",
+    "description": null,
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "/attachment/",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "bearer",
+          "bearer": {
+            "key": "token",
+            "value": "{{TOKEN}}",
+            "type": "string"
+          }
+        },
+        "description": "",
+        "url": {
+          "raw": "{{BASE_URL}}/attachments",
+          "protocol": "",
+          "host": ["{{BASE_URL}}"],
+          "path": ["attachments"],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "value": ["/home/haghdoost/Videos/hello.jpeg"],
+              "disabled": false,
+              "type": "default"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "/attachment/upload/init",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{BASE_URL}}/attachments/init",
+          "protocol": "",
+          "host": ["{{BASE_URL}}"],
+          "path": ["attachments", "init"],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"encryptedSessionKey\": \"Au7ueYOlv3jzu1hHdWv0aeGpM26v1MIZVCrn+4H1iF95UvO7jTuhuvDio4dp+Cn7j/Me9B6OCgxgULU5Pkg9Rw5EKvDXmjAJ7bM4bQTOiwT3YQo+FB6UkBGKeGctjEw7e94XW9ZsUDBem54iOktOU/cbnwE6ShksfyKzkn6O1JXWOWsKGSqefPSVorzW/OPHw0uqOSHcJC47fhwxOoSDTri0GtzuYz1xkPyaCSRP6l4gF/SnKvhFdCblrzWSigk6xonyJbSKvBgOUTsdpRUv1TdAWAnr4hXEBBpTbqqkwEWKL7jtW4NIkjCal+KhwQasqE5vz4CQhUPgsDcqg5oPUw==\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "/encryption/session-key",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{BASE_URL}}/encryption/session-key",
+          "protocol": "",
+          "host": ["{{BASE_URL}}"],
+          "path": ["encryption", "session-key"],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "attachments/progress",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "bearer",
+          "bearer": {
+            "key": "token",
+            "value": "{{TOKEN}}",
+            "type": "string"
+          }
+        },
+        "description": "",
+        "url": {
+          "raw": "{{BASE_URL}}/attachments/progress",
+          "protocol": "",
+          "host": ["{{BASE_URL}}"],
+          "path": ["attachments", "progress"],
+          "query": [],
+          "variable": []
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "TOKEN",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
