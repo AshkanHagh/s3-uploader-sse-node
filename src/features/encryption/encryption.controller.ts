@@ -2,7 +2,7 @@ import { Controller, Get } from "@nestjs/common";
 import { EncryptionService } from "./encryption.service";
 import crypto from "node:crypto";
 
-@Controller("encryption")
+@Controller("encryptions")
 export class EncryptionController {
   constructor(private encryptionService: EncryptionService) {}
 
