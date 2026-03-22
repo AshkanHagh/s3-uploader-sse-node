@@ -1,7 +1,7 @@
 import { NestFastifyApplication } from "@nestjs/platform-fastify";
 import { UploaderErrorType } from "src/filters/exception";
 import { createNestAppInstance } from "test/test.helper";
-import { beforeAll, describe, it, expect } from "vitest";
+import { beforeAll, describe, it, expect, afterAll } from "vitest";
 
 describe("AttachmentController", () => {
   let app: NestFastifyApplication;
@@ -40,5 +40,9 @@ describe("AttachmentController", () => {
       expect(initRes.statusCode).toEqual(400);
       expect(error.message).toEqual(UploaderErrorType.INVALID_SESSION_KEY);
     });
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });
